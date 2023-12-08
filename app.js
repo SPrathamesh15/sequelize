@@ -9,6 +9,9 @@ const sequelize = require('./util/database');
 const Product = require('./models/product')
 const newUser = require('./models/newUser')
 
+const Cart = require('./models/cart')
+const CartItem = require('./models/cart-item')
+
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -41,8 +44,13 @@ app.use('/expense', expenseRoutes);
 
 app.use(errorController.get404);
 
+//Association
 Product.belongsTo(newUser, {constraints: true, onDelete: 'CASCADE'})
 newUser.hasMany(Product) // this relation is similar to above line
+newUser.hasOne(Cart)
+Cart.belongsTo(newUser) // same as above line optional
+Cart.belongsToMany(Product, { through: CartItem })// many to many relationship
+Product.belongsToMany(Cart, { through: CartItem })
 
 sequelize
     // .sync({force: true})
@@ -63,9 +71,12 @@ sequelize
         return existingUser;
     })
     .then(existingUser => {
-        console.log('existing user in server', existingUser); 
-        app.listen(3000);
-        console.log('Server is running on port 3000');
+        console.log('existing user in server', existingUser);
+        return existingUser.createCart(); 
+    })
+    .then(cart => {
+      app.listen(3000);
+      console.log('Server is running on port 3000');
     })
     .catch(err => console.log(err));
 
