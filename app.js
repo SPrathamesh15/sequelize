@@ -23,6 +23,8 @@ const shopRoutes = require('./routes/shop');
 const userRoutes = require('./routes/user');
 const expenseRoutes = require('./routes/expense');
 
+const reviewRoutes = require('./routes/review');
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());  // Add this line for JSON support
 app.use(express.static(path.join(__dirname, 'public')));
@@ -39,6 +41,8 @@ app.use(cors())
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use('/user', userRoutes);
+
+app.use('/review', reviewRoutes);
 
 app.use('/expense', expenseRoutes);
 
