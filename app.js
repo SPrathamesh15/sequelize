@@ -21,6 +21,8 @@ const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
 const userRoutes = require('./routes/user');
+const generalStoreRoutes = require('./routes/generalStore');
+
 const expenseRoutes = require('./routes/expense');
 
 const reviewRoutes = require('./routes/review');
@@ -42,6 +44,7 @@ app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use('/user', userRoutes);
 
+app.use('/generalStore', generalStoreRoutes);
 app.use('/review', reviewRoutes);
 
 app.use('/expense', expenseRoutes);
