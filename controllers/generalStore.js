@@ -52,6 +52,11 @@ exports.updateProductQuantity = async (req, res, next) => {
         returning: true, 
       });
       
+    //   const updatedProduct = await Product.update(updatedProductDetails, {
+    //     where: { id: productId },
+    //     returning: true,
+    //   })[1][0];
+      
       if (numOfRowsUpdated === 0) {
         return res.status(404).json({ error: 'Product not found' });
       }
